@@ -1,21 +1,24 @@
 package br.com.dorian.fluke.model.cliente;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.data.annotation.Id;
+import lombok.Getter;
+import lombok.Setter;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_cliente")
 public class Cliente {
-    @Id
-    private String id;
+    
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @NotNull
     private String nomeCompleto;
     @NotNull

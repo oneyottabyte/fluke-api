@@ -4,24 +4,27 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.data.annotation.Id;
-
 import br.com.dorian.fluke.model.cliente.Cliente;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_apolice")
 public class Apolice {
+	
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	@NotNull
-	private Long codigo;
+	private Long numeroApolice;
 	@NotNull
 	private LocalDate inicioVigencia;
 	@NotNull
