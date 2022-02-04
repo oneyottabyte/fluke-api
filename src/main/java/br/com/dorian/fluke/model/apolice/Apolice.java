@@ -4,9 +4,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -33,6 +36,9 @@ public class Apolice {
 	private String placaVeiculo;
 	@NotNull
 	private BigDecimal valor;
+	
 	@NotNull
+	@JoinColumn(name = "id_cliente")
+	@OneToOne(optional = false, fetch = FetchType.EAGER)
 	private Cliente cliente;
 }
