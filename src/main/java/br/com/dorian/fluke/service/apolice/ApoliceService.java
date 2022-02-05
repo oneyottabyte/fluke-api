@@ -6,5 +6,5 @@ import br.com.dorian.fluke.model.apolice.Apolice;
 
 public interface ApoliceService {
 
-	public List<Apolice> getAllApolices();
+	List<Apolice> getAllApolices();
 }

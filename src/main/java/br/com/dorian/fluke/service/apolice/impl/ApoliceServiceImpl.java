@@ -13,11 +13,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ApoliceServiceImpl implements ApoliceService{
 	
-private ApoliceRepository apoliceRepository;
+	private ApoliceRepository apoliceRepository;
 	
 	@Override
 	public List<Apolice> getAllApolices() {
 		return apoliceRepository.findAll();
 	}
-
 }

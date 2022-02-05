@@ -17,6 +17,7 @@ public class ApoliceDTO {
 	private LocalDate fimVigencia;
 	private String placaVeiculo;
 	private BigDecimal valor;
+	private String clienteNome;
 	
 	public ApoliceDTO(Apolice apolice) {
 		this.id = apolice.getId();

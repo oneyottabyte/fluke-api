@@ -14,11 +14,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import br.com.dorian.fluke.model.cliente.Cliente;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "tb_apolice")
 public class Apolice {
