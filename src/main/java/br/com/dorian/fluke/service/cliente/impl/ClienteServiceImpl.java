@@ -1,8 +1,10 @@
 package br.com.dorian.fluke.service.cliente.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.dorian.fluke.controller.v1.form.ClienteForm;
@@ -48,5 +50,15 @@ public class ClienteServiceImpl implements ClienteService{
 	public Cliente findById(Long id) {
 		return clienteRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado!"));
+	}
+
+	@Override
+	public ResponseEntity<?> deletarCliente(Long id) {
+		Optional<Cliente> optional = clienteRepository.findById(id);		
+		if(optional.isPresent()) {
+			clienteRepository.deleteById(id);
+			return ResponseEntity.ok().build(); 
+		}
+		return ResponseEntity.notFound().build();	
 	}
 }

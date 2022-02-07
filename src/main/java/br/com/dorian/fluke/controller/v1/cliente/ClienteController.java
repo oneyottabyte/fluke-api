@@ -5,8 +5,11 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,13 +30,24 @@ public class ClienteController {
 
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@GetMapping
 	public List<ClienteDTO> listClientes() {
 		List<Cliente> clientes = clienteService.getAllClientes();
 		return ClienteDTO.converter(clientes);
 	}
-
+	
+	@GetMapping("/{id}")
+	public ClienteDTO findById(@PathVariable Long id) {
+		Cliente cliente = clienteService.findById(id);
+		ClienteDTO dto = modelMapper.map(cliente, ClienteDTO.class);
+		return dto; 
+	}
+	
+	@Transactional
 	@PostMapping
 	public ResponseEntity<ClienteDTO> createCliente(@RequestBody @Valid ClienteForm form,
 			UriComponentsBuilder uriBuilder) {
@@ -41,11 +55,18 @@ public class ClienteController {
 		URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(cliente.getId()).toUri();
 		return ResponseEntity.created(uri).body(new ClienteDTO(cliente));
 	}
-
-	@PutMapping(value = "/{id}")
+	
+	@Transactional
+	@PutMapping("/{id}")
 	public ResponseEntity<ClienteDTO> update(@PathVariable Long id, @RequestBody @Valid ClienteForm form) {
 		Cliente cliente = clienteService.updateCliente(id, form);
 		return ResponseEntity.ok(new ClienteDTO(cliente));
 
+	}
+
+	@Transactional
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> remover(@PathVariable Long id){
+		return clienteService.deletarCliente(id);	
 	}
 }
