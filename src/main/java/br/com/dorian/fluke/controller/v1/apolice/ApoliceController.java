@@ -25,7 +25,7 @@ import br.com.dorian.fluke.model.apolice.Apolice;
 import br.com.dorian.fluke.service.apolice.ApoliceService;
 
 @RestController
-@RequestMapping("/apolices")
+@RequestMapping("/apolice")
 public class ApoliceController {
 
 	@Autowired
@@ -49,8 +49,7 @@ public class ApoliceController {
 	
 	@Transactional
 	@PostMapping
-	public ResponseEntity<ApoliceDTO> createCliente(@RequestBody @Valid ApoliceForm form,
-			UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<ApoliceDTO> createCliente(@RequestBody @Valid ApoliceForm form,UriComponentsBuilder uriBuilder) {
 		Apolice apolice = apoliceService.createApolice(form);
 		URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(apolice.getId()).toUri();
 		return ResponseEntity.created(uri).body(new ApoliceDTO(apolice));
@@ -59,7 +58,7 @@ public class ApoliceController {
 	@Transactional
 	@PutMapping("/{id}")
 	public ResponseEntity<ApoliceDTO> update(@PathVariable Long id, @RequestBody @Valid ApoliceForm form) {
-		Apolice apolice = apoliceService.updateCliente(id, form);
+		Apolice apolice = apoliceService.updateApolice(id, form);
 		return ResponseEntity.ok(new ApoliceDTO(apolice));
 
 	}

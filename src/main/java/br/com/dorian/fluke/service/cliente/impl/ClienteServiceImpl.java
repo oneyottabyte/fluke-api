@@ -4,22 +4,22 @@ import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import br.com.dorian.fluke.controller.v1.dto.ClienteDTO;
 import br.com.dorian.fluke.controller.v1.form.ClienteForm;
 import br.com.dorian.fluke.exception.ResourceNotFoundException;
 import br.com.dorian.fluke.model.cliente.Cliente;
 import br.com.dorian.fluke.repository.cliente.ClienteRepository;
 import br.com.dorian.fluke.service.cliente.ClienteService;
-import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class ClienteServiceImpl implements ClienteService{
-
+	@Autowired
 	private ClienteRepository clienteRepository;
-	
+	@Autowired
 	private ModelMapper modelMapper;
 	
 	@Override
@@ -44,6 +44,11 @@ public class ClienteServiceImpl implements ClienteService{
 	@Override
 	public Cliente toCliente(ClienteForm form) {
 		return modelMapper.map(form, Cliente.class);
+	}
+	
+	@Override
+	public ClienteDTO toDTO( Cliente cliente) {
+		return modelMapper.map(cliente, ClienteDTO.class);
 	}
 
 	@Override

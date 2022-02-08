@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ValidationHandler {
-	
+
 	@Autowired
 	private MessageSource messageSource;
-	
+
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public List<ErrorFormDTO> handler(MethodArgumentNotValidException exception) {
 		List<ErrorFormDTO> dto = new ArrayList<>();
-		
+
 		List<FieldError> fieldError = exception.getBindingResult().getFieldErrors();
-		
+
 		fieldError.forEach(e -> {
 			String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
 			ErrorFormDTO erro = new ErrorFormDTO(e.getField(), mensagem);
@@ -33,6 +33,4 @@ public class ValidationHandler {
 		});
 		return dto;
 	}
-	
-
 }

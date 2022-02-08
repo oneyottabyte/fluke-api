@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import br.com.dorian.fluke.controller.v1.dto.ClienteDTO;
 import br.com.dorian.fluke.controller.v1.form.ClienteForm;
 import br.com.dorian.fluke.model.cliente.Cliente;
 
@@ -20,4 +21,6 @@ public interface ClienteService {
 	Cliente findById(Long id);
 	
 	ResponseEntity<?> deletarCliente(Long id);
+
+	ClienteDTO toDTO(Cliente cliente);
 }

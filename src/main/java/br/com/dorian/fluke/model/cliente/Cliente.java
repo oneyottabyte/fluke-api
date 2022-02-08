@@ -1,28 +1,33 @@
 package br.com.dorian.fluke.model.cliente;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "tb_cliente")
+@Table(name = "tb_cliente", uniqueConstraints={@UniqueConstraint(columnNames={"cpf"})})
 public class Cliente {
     
-	@Id
+	@Id @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+    
+	@Column(name = "nome")
     private String nomeCompleto;
-    @NotNull
-    private String cpf;// tem que validar e  tornar unico
-    @NotNull
+
+	@Column(name = "cpf")
+    private String cpf;
+    
+	@Column(name = "cidade")
     private String cidade;
-    @NotNull
+    
+	@Column(name = "uf")
     private String uf;
 }

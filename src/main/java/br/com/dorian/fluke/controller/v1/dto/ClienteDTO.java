@@ -5,8 +5,10 @@ import java.util.stream.Collectors;
 
 import br.com.dorian.fluke.model.cliente.Cliente;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class ClienteDTO {
 	
 	private Long id;
@@ -14,6 +16,8 @@ public class ClienteDTO {
     private String cpf;
     private String cidade;
     private String uf;
+    
+    public ClienteDTO() {}
 	
     public ClienteDTO(Cliente cliente) {
 		this.id = cliente.getId();

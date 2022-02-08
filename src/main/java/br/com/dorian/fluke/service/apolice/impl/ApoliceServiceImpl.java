@@ -40,7 +40,7 @@ public class ApoliceServiceImpl implements ApoliceService{
 	}
 
 	@Override
-	public Apolice updateCliente(Long id, ApoliceForm form) {
+	public Apolice updateApolice(Long id, ApoliceForm form) {
 		Apolice apolice = modelMapper.map(form, Apolice.class);
 		apolice.setId(id);
 		return apoliceRepository.save(apolice);

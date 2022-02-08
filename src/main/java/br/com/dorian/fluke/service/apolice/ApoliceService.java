@@ -15,7 +15,7 @@ public interface ApoliceService {
 
 	Apolice createApolice(ApoliceForm form);
 
-	Apolice updateCliente(Long id, ApoliceForm form);
+	Apolice updateApolice(Long id, ApoliceForm form);
 
 	ResponseEntity<?> deletarApolice(Long id);
 

@@ -3,6 +3,7 @@ package br.com.dorian.fluke.model.apolice;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,19 +25,25 @@ public class Apolice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
+	
+	@Column(name = "numeroApolice")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long numeroApolice;
-	@NotNull
+	
+	@Column(name = "inicioVigencia")
 	private LocalDate inicioVigencia;
-	@NotNull
+	
+	@Column(name = "fimVigencia")
 	private LocalDate fimVigencia;
-	@NotNull
+	
+	@Column(name = "placaVeiculo")
 	private String placaVeiculo;
-	@NotNull
+	
+	@Column(name = "valor")
 	private BigDecimal valor;
 	
 	@NotNull
-	@JoinColumn(name = "id_cliente")
+	@JoinColumn(name = "cpf_cliente")
 	@OneToOne(optional = false, fetch = FetchType.EAGER)
 	private Cliente cliente;
 }

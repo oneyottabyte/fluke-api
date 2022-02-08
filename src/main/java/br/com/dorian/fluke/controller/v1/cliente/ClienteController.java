@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +22,7 @@ import br.com.dorian.fluke.controller.v1.dto.ClienteDTO;
 import br.com.dorian.fluke.controller.v1.form.ClienteForm;
 import br.com.dorian.fluke.model.cliente.Cliente;
 import br.com.dorian.fluke.service.cliente.ClienteService;
+import br.com.dorian.fluke.util.config.ValidadorCPF;
 
 @RestController
 @RequestMapping("/clientes")
@@ -31,9 +31,6 @@ public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
 	
-	@Autowired
-	private ModelMapper modelMapper;
-
 	@GetMapping
 	public List<ClienteDTO> listClientes() {
 		List<Cliente> clientes = clienteService.getAllClientes();
@@ -43,30 +40,28 @@ public class ClienteController {
 	@GetMapping("/{id}")
 	public ClienteDTO findById(@PathVariable Long id) {
 		Cliente cliente = clienteService.findById(id);
-		ClienteDTO dto = modelMapper.map(cliente, ClienteDTO.class);
-		return dto; 
+		return clienteService.toDTO(cliente);
 	}
-	
-	@Transactional
+
 	@PostMapping
-	public ResponseEntity<ClienteDTO> createCliente(@RequestBody @Valid ClienteForm form,
-			UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<ClienteDTO> create(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
+		if(!ValidadorCPF.isValid(form.getCpf())) {
+			return ResponseEntity.badRequest().body(null);
+		}
 		Cliente cliente = clienteService.createCliente(form);
 		URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(cliente.getId()).toUri();
 		return ResponseEntity.created(uri).body(new ClienteDTO(cliente));
 	}
 	
-	@Transactional
 	@PutMapping("/{id}")
 	public ResponseEntity<ClienteDTO> update(@PathVariable Long id, @RequestBody @Valid ClienteForm form) {
 		Cliente cliente = clienteService.updateCliente(id, form);
 		return ResponseEntity.ok(new ClienteDTO(cliente));
-
 	}
 
 	@Transactional
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> remover(@PathVariable Long id){
+	public ResponseEntity<?> delete(@PathVariable Long id){
 		return clienteService.deletarCliente(id);	
 	}
 }

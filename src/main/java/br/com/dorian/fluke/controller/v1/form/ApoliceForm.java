@@ -10,13 +10,13 @@ import javax.validation.constraints.Size;
 
 public class ApoliceForm {
 	
-	@NotNull @NotEmpty
+	@NotNull 
 	private LocalDate inicioVigencia;
-	@NotNull @NotEmpty
+	@NotNull
 	private LocalDate fimVigencia;
 	@NotNull @NotEmpty @Size(max = 10)
 	private String placaVeiculo;
-	@NotNull @NotEmpty
+	@NotNull
 	private BigDecimal valor;
 	@NotNull @NotEmpty @Size(max = 15)
 	private String clienteCpf;
