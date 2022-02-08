@@ -1,13 +1,18 @@
 package br.com.dorian.fluke.controller.v1.cliente;
 
-import java.net.URI;
-import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,13 +21,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.dorian.fluke.controller.v1.dto.ClienteDTO;
 import br.com.dorian.fluke.controller.v1.form.ClienteForm;
 import br.com.dorian.fluke.model.cliente.Cliente;
 import br.com.dorian.fluke.service.cliente.ClienteService;
-import br.com.dorian.fluke.util.config.ValidadorCPF;
 
 @RestController
 @RequestMapping("/clientes")
@@ -31,37 +33,50 @@ public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
 	
-	@GetMapping
-	public List<ClienteDTO> listClientes() {
-		List<Cliente> clientes = clienteService.getAllClientes();
-		return ClienteDTO.converter(clientes);
-	}
-	
-	@GetMapping("/{id}")
-	public ClienteDTO findById(@PathVariable Long id) {
-		Cliente cliente = clienteService.findById(id);
-		return clienteService.toDTO(cliente);
-	}
-
 	@PostMapping
-	public ResponseEntity<ClienteDTO> create(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
-		if(!ValidadorCPF.isValid(form.getCpf())) {
-			return ResponseEntity.badRequest().body(null);
-		}
-		Cliente cliente = clienteService.createCliente(form);
-		URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(cliente.getId()).toUri();
-		return ResponseEntity.created(uri).body(new ClienteDTO(cliente));
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<ClienteDTO> update(@PathVariable Long id, @RequestBody @Valid ClienteForm form) {
-		Cliente cliente = clienteService.updateCliente(id, form);
-		return ResponseEntity.ok(new ClienteDTO(cliente));
-	}
+    public ResponseEntity<Object> saveCliente(@RequestBody @Valid ClienteForm form){
+        if(clienteService.existsByCpf(form.getCpf())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Cpf já está em uso!");
+        }
+        var cliente = new Cliente();
+        BeanUtils.copyProperties(form, cliente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.save(cliente));
+    }
 
-	@Transactional
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id){
-		return clienteService.deletarCliente(id);	
-	}
+    @GetMapping
+    public ResponseEntity<Page<Cliente>> getAllClientes(@PageableDefault(page = 0, size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(clienteService.findAll(pageable));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOneCliente(@PathVariable(value = "id") UUID id){
+        Optional<Cliente> clienteOptional = clienteService.findById(id);
+        if (!clienteOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(clienteOptional.get());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteCliente(@PathVariable(value = "id") UUID id){
+    	Optional<Cliente> clienteOptional = clienteService.findById(id);
+        if (!clienteOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
+        }
+        clienteService.delete(clienteOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Cliente deletedo com successo.");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateCliente(@PathVariable(value = "id") UUID id, @RequestBody @Valid ClienteForm form){
+        Optional<Cliente> clienteOptional = clienteService.findById(id);
+        if (!clienteOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
+        }
+        var cliente = new Cliente();
+        BeanUtils.copyProperties(form, cliente);
+        cliente.setId(clienteOptional.get().getId());
+        return ResponseEntity.status(HttpStatus.OK).body(clienteService.save(cliente));
+    }
+
 }
