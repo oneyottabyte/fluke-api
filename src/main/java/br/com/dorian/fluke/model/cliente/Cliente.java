@@ -1,7 +1,6 @@
 package br.com.dorian.fluke.model.cliente;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +20,7 @@ public class Cliente implements Serializable {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
     
 	@Column(nullable = false, length = 130)
     private String nomeCompleto;

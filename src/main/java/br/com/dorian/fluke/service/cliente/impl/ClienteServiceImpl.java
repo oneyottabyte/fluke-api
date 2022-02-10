@@ -1,7 +1,6 @@
 package br.com.dorian.fluke.service.cliente.impl;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -31,7 +30,7 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public Optional<Cliente> findById(UUID id) {
+	public Optional<Cliente> findById(Long id) {
 		return clienteRepository.findById(id);
 	}
 	@Override

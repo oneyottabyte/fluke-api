@@ -1,7 +1,6 @@
 package br.com.dorian.fluke.service.cliente;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +13,7 @@ public interface ClienteService {
 
 	Page<Cliente> findAll(Pageable pageable);
 
-	Optional<Cliente> findById(UUID id);
+	Optional<Cliente> findById(Long id);
 
 	void delete(Cliente cliente);
 

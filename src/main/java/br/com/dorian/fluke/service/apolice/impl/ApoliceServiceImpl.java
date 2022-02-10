@@ -29,8 +29,8 @@ public class ApoliceServiceImpl implements ApoliceService{
 	}
 
 	@Override
-	public Optional<Apolice> findById(UUID id) {
-		return apoliceRepository.findById(id);
+	public Optional<Apolice> findByNumeroApolice(UUID numeroApolice) {
+		return apoliceRepository.findByNumeroApolice(numeroApolice);
 	}
 
 	@Override

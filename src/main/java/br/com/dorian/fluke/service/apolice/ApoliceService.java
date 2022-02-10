@@ -14,7 +14,7 @@ public interface ApoliceService {
 
 	Page<Apolice> findAll(Pageable pageable);
 
-	Optional<Apolice> findById(UUID id);
+	Optional<Apolice> findByNumeroApolice(UUID numeroApolice);
 
 	void delete(Apolice apolice);
 
