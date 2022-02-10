@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.dorian.fluke.controller.v1.dto.ClienteDTO;
 import br.com.dorian.fluke.controller.v1.form.ClienteForm;
 import br.com.dorian.fluke.model.cliente.Cliente;
 import br.com.dorian.fluke.service.cliente.ClienteService;
+import br.com.dorian.fluke.util.config.CpfValidator;
 
 @RestController
 @RequestMapping("/clientes")
@@ -37,6 +39,9 @@ public class ClienteController {
     public ResponseEntity<Object> saveCliente(@RequestBody @Valid ClienteForm form){
         if(clienteService.existsByCpf(form.getCpf())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Cpf já está em uso!");
+        }
+        if(!CpfValidator.isValid(form.getCpf())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Cpf Invalido!");
         }
         var cliente = new Cliente();
         BeanUtils.copyProperties(form, cliente);
@@ -54,11 +59,13 @@ public class ClienteController {
         if (!clienteOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(clienteOptional.get());
+        var dto = new ClienteDTO();
+        BeanUtils.copyProperties(clienteOptional, dto);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteCliente(@PathVariable(value = "id") UUID id){
+    public ResponseEntity<Object> deleteCliente(@PathVariable UUID id){
     	Optional<Cliente> clienteOptional = clienteService.findById(id);
         if (!clienteOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
@@ -68,7 +75,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateCliente(@PathVariable(value = "id") UUID id, @RequestBody @Valid ClienteForm form){
+    public ResponseEntity<Object> updateCliente(@PathVariable UUID id, @RequestBody @Valid ClienteForm form){
         Optional<Cliente> clienteOptional = clienteService.findById(id);
         if (!clienteOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");

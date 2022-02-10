@@ -25,7 +25,7 @@ public class Apolice implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID numeroApolice;
 	
-	 @Column(nullable = false)
+	@Column(nullable = false)
 	private LocalDate inicioVigencia;
 	
 	@Column(nullable = false)

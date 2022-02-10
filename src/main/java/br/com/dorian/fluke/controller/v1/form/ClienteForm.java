@@ -9,12 +9,12 @@ import lombok.Getter;
 @Getter
 public class ClienteForm {
 	
-	@NotNull @NotEmpty @Size(max=130)
+	@NotNull @NotEmpty @Size(min=2, max=130)
     private String nomeCompleto;
-	@NotNull @NotEmpty @Size(max=15)
+	@NotNull @NotEmpty @Size(min=11, max=11)
     private String cpf;
-	@NotNull @NotEmpty @Size(max=40)
+	@NotNull @NotEmpty @Size(min=2, max=40)
     private String cidade;
-	@NotNull @NotEmpty @Size(max=2)
+	@NotNull @NotEmpty @Size(min=2,max=2)
     private String uf;
 }

@@ -2,11 +2,9 @@ package br.com.dorian.fluke.controller.v1.dto;
 
 import java.util.UUID;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ClienteDTO {
 	
 	private UUID id;

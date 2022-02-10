@@ -26,7 +26,7 @@ public class Cliente implements Serializable {
 	@Column(nullable = false, length = 130)
     private String nomeCompleto;
 
-	@Column(nullable = false, unique = true, length = 15)
+	@Column(nullable = false, unique = true, length = 11)
     private String cpf;
     
 	@Column(nullable = false, length = 40)
