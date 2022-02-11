@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.dorian.fluke.controller.v1.dto.ApoliceDTO;
+import br.com.dorian.fluke.controller.v1.dto.ApoliceDetalhadaDTO;
 import br.com.dorian.fluke.model.apolice.Apolice;
 import br.com.dorian.fluke.service.apolice.ApoliceService;
 
@@ -34,18 +36,18 @@ public class ApoliceController {
 	@Autowired
 	private ApoliceService apoliceService;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@PostMapping
     public ResponseEntity<Object> saveApolice(@RequestBody @Valid ApoliceDTO dto){
 		Apolice apolice = new Apolice();
-        apolice.setFimVigencia(dto.getFimVigencia());
-		apolice.setInicioVigencia(dto.getInicioVigencia());
-		apolice.setPlacaVeiculo(dto.getPlacaVeiculo());
-		apolice.setValorApolice(dto.getValor());
-        return ResponseEntity.status(HttpStatus.CREATED).body(apoliceService.save(apolice));
+		modelMapper.map(dto, apolice);
+		return ResponseEntity.status(HttpStatus.CREATED).body(apoliceService.save(apolice));
     }
 	
     @GetMapping
-    public ResponseEntity<Page<Apolice>> getAllApolices(@PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+    public ResponseEntity<Page<Apolice>> getAllApolices(@PageableDefault(page = 0, size = 5, sort = "fimVigencia", direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(apoliceService.findAll(pageable));
     }
 
@@ -55,10 +57,11 @@ public class ApoliceController {
         if (!apoliceOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Apolice não encontrado.");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(apoliceOptional);
+        ApoliceDetalhadaDTO dto = apoliceService.detalharApolice(apoliceOptional);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
     
-    @DeleteMapping("/{numeroApolice}")
+	@DeleteMapping("/{numeroApolice}")
     public ResponseEntity<Object> deleteApolice(@PathVariable UUID numeroApolice){
     	Optional<Apolice> apoliceOptional = apoliceService.findByNumeroApolice(numeroApolice);
         if (!apoliceOptional.isPresent()) {
