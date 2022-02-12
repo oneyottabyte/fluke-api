@@ -1,4 +1,4 @@
-package br.com.dorian.fluke.util.config;
+package br.com.dorian.fluke.util.cpf;
 
 public class CpfValidator {
 	

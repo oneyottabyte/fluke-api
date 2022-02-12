@@ -1,4 +1,4 @@
-package br.com.dorian.fluke.util.config;
+package br.com.dorian.fluke.util.expiration;
 
 import java.time.LocalDate;
 import static java.time.temporal.ChronoUnit.DAYS;

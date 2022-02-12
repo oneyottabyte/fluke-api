@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import br.com.dorian.fluke.controller.v1.dto.ApoliceDTO;
 import br.com.dorian.fluke.controller.v1.dto.ApoliceDetalhadaDTO;
 import br.com.dorian.fluke.model.apolice.Apolice;
 
@@ -20,5 +21,7 @@ public interface ApoliceService {
 	void delete(Apolice apolice);
 	
 	ApoliceDetalhadaDTO detalharApolice(Optional<Apolice> apoliceOptional);
+
+	Apolice toApolice(ApoliceDTO dto, Apolice apolice);
 
 }

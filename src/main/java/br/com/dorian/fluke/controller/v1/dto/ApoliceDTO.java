@@ -28,5 +28,8 @@ public class ApoliceDTO {
 	
 	@NotNull(message = "Valor da Apolice é uma informação obrigatória")
 	private BigDecimal valor;
+	
+	@NotNull(message = "Dados do cliente é obrigatório")
+	private  ClienteInput cliente;
 }
 

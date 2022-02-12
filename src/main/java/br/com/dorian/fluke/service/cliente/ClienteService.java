@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import br.com.dorian.fluke.controller.v1.dto.ApoliceDTO;
+import br.com.dorian.fluke.model.apolice.Apolice;
 import br.com.dorian.fluke.model.cliente.Cliente;
 
 public interface ClienteService {
@@ -18,4 +20,8 @@ public interface ClienteService {
 	void delete(Cliente cliente);
 
 	boolean existsByCpf(String cpf);
+
+	Optional<Cliente> findByCpf(String cpf);
+
+	Apolice create(ApoliceDTO dto);
 }
