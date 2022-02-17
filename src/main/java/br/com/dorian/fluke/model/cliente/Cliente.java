@@ -1,7 +1,6 @@
 package br.com.dorian.fluke.model.cliente;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -42,7 +41,7 @@ public class Cliente implements Serializable {
  
 	@OneToMany()
 	@JsonIgnore
-	private List<Apolice> apolices = new ArrayList();
+	private List<Apolice> apolices;
 
 	
 }
