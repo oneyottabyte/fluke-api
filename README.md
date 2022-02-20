@@ -3,7 +3,7 @@
   <img src="https://user-images.githubusercontent.com/59287246/154776706-a039c8a2-1e92-4f15-aed8-850657042dfa.png"/>
 </p>
 <h1 align="center">
- API REST - fluke-api (Projeto Backend de uma Seguradora de Veiculos) 
+ API REST - fluke-api (Projeto Backend) 
 </h1>
 
 
@@ -15,9 +15,9 @@
 	<img src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/24/000000/external-readme-is-a-easy-to-build-a-developer-hub-that-adapts-to-the-user-logo-color-tal-revivo.png"/>
   Descrição
 </h1>
-Projeto em desenvolvimento, visando a prática com a linguagem Java e os conceitos do paradigma de orientação a objetos.
+Projeto em desenvolvimento, visando adquirir boas práticas de programação com a criação de uma API REST para uma seguradora de veículos.
 
-## Funcionalidade
+## Funcionalidades
 
 ### CRUD de clientes:
 - Dados: Nome Completo, CPF, Cidade e UF;
@@ -34,6 +34,7 @@ Projeto em desenvolvimento, visando a prática com a linguagem Java e os conceit
 - Informar se a apólice venceu ou não;
 - Informar quantos dias para vencer, ou há quantos dias venceu;
 - Informar placa do veículo e valor da apólice.
+
 ### Finalização:
 - Disponibilizar imagem Docker para execução da aplicação ou WAR;
 
