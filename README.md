@@ -35,8 +35,6 @@ Projeto em desenvolvimento, visando adquirir boas práticas de programação com
 - Informar quantos dias para vencer, ou há quantos dias venceu;
 - Informar placa do veículo e valor da apólice.
 
-### Finalização:
-- Disponibilizar imagem Docker para execução da aplicação ou WAR;
 
 <h1 id="documentacao">
 <img height="30" src="https://img.icons8.com/color/48/000000/documents.png"/>
