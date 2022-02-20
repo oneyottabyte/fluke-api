@@ -17,6 +17,25 @@
 </h1>
 Projeto em desenvolvimento, visando a prática com a linguagem Java e os conceitos do paradigma de orientação a objetos.
 
+## Funcionalidade
+
+### CRUD de clientes:
+- Dados: Nome Completo, CPF, Cidade e UF;
+- Todos os dados são obrigatórios;
+- CPF deve ser válido e deve ser único na base.
+
+### CRUD de apólices:
+- Dados: Número da apólice, Início de vigência, Fim de vigência, Placa do veículo e Valor da apólice;
+- Todos os dados são obrigatórios;
+- O número da apólice deve ser gerado aleatoriamente e ser único.
+
+### Consultar uma apólice por número:
+- Tela ou endpoint separado dos CRUDs;
+- Informar se a apólice venceu ou não;
+- Informar quantos dias para vencer, ou há quantos dias venceu;
+- Informar placa do veículo e valor da apólice.
+### Finalização:
+- Disponibilizar imagem Docker para execução da aplicação ou WAR;
 
 <h1 id="documentacao">
 <img height="30" src="https://img.icons8.com/color/48/000000/documents.png"/>
@@ -40,13 +59,15 @@ A collection do postman atualizada pode ser importada clicando no botão abaixo:
 <a name = "tech_stack"></a>
 
 - Java 17 - Versão do Java utilizada
-- Spring boot 2.6.3 - Framework de desenvolvimento
-- Maven- Gerenciador de dependencias
+- Spring boot 2.6.2 - Framework de desenvolvimento
+- Maven - Gerenciador de dependencias
 - H2 Database - Database para o ambiente de testes
+- Postgres - Database para o ambiente de Produção
 - Spring Data Jpa - Abstração orm do spring pra integração com o banco de dados
-- Swagger - Documentação oficial da API
+- Swagger (Open API) - Documentação oficial da API
 - Postman - Ferramenta para testes nas requisições
 - Lombok - Framework para abstração e melhora na legibilidade do código
+- ModelMapper - Facilitar o mapeamento de objetos e diminuir código boilerplate
 
 
 
